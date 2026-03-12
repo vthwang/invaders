@@ -1,14 +1,16 @@
-use crossterm::ExecutableCommand;
-use crossterm::cursor::{Hide, Show};
-use crossterm::event::{self, Event, KeyCode};
-use crossterm::terminal::{self, EnterAlternateScreen, LeaveAlternateScreen};
-use invaders::frame::Drawable;
-use invaders::{frame, player::Player, render};
+use crossterm::{
+    ExecutableCommand,
+    cursor::{Hide, Show},
+    event::{self, Event, KeyCode},
+    terminal::{self, EnterAlternateScreen, LeaveAlternateScreen},
+};
+use invaders::{
+    frame::{self, Drawable},
+    player::Player,
+    render,
+};
 use rusty_audio::Audio;
-use std::error::Error;
-use std::sync::mpsc;
-use std::time::Duration;
-use std::{io, thread};
+use std::{error::Error, io, sync::mpsc, thread, time::Duration};
 
 fn main() -> Result<(), Box<dyn Error>> {
     let mut audio = Audio::new();

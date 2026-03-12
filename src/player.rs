@@ -1,4 +1,7 @@
-use crate::{NUM_COLS, NUM_ROWS, frame::{Drawable, Frame}};
+use crate::{
+    NUM_COLS, NUM_ROWS,
+    frame::{Drawable, Frame},
+};
 
 pub struct Player {
     pub x: usize,
