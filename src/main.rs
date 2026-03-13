@@ -12,7 +12,7 @@ use std::{error::Error, io, sync::mpsc, thread, time::{Duration, Instant}};
 
 fn main() -> Result<(), Box<dyn Error>> {
     let mut audio = Audio::new();
-    audio.add("explosion", "audio/original/explode.wav");
+    audio.add("explode", "audio/original/explode.wav");
     audio.add("lose", "audio/original/lose.wav");
     audio.add("move", "audio/original/move.wav");
     audio.add("pew", "audio/original/pew.wav");
@@ -78,6 +78,9 @@ fn main() -> Result<(), Box<dyn Error>> {
         if invaders.update(delta) {
             audio.play("move");
         }
+        if player.detect_hits(&mut invaders) {
+            audio.play("explode");
+        }
 
         // Draw & Render
         let drawables: Vec<&dyn Drawable> = vec![&player, &invaders];
@@ -86,6 +89,16 @@ fn main() -> Result<(), Box<dyn Error>> {
         }
         let _ = render_tx.send(curr_frame);
         thread::sleep(Duration::from_millis(1));
+
+        // Win or lose?
+        if invaders.all_killed() {
+            audio.play("win");
+            break 'game_loop;
+        }
+        if invaders.reached_bottom() {
+            audio.play("lose");
+            break 'game_loop;
+        }
     }
 
     // Cleanup
