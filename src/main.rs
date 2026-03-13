@@ -5,10 +5,19 @@ use crossterm::{
     terminal::{self, EnterAlternateScreen, LeaveAlternateScreen},
 };
 use invaders::{
-    frame::{self, Drawable}, invaders::Invaders, player::Player, render
+    frame::{self, Drawable},
+    invaders::Invaders,
+    player::Player,
+    render,
 };
 use rusty_audio::Audio;
-use std::{error::Error, io, sync::mpsc, thread, time::{Duration, Instant}};
+use std::{
+    error::Error,
+    io,
+    sync::mpsc,
+    thread,
+    time::{Duration, Instant},
+};
 
 fn main() -> Result<(), Box<dyn Error>> {
     let mut audio = Audio::new();
@@ -47,7 +56,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut player = Player::new();
     let mut instant = Instant::now();
     let mut invaders = Invaders::new();
-    
+
     'game_loop: loop {
         // Per-frame init
         let delta = instant.elapsed();
